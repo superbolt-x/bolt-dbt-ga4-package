@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: google_analytics_4
-    schema: ga4_raw
+    schema: google_analytics_4
     tables:
       - name: traffic_sources
       - name: granular_traffic_sources
