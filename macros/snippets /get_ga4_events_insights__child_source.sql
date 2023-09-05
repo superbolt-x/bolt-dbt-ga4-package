@@ -1,6 +1,6 @@
 {%- macro get_ga4_events_insights__child_source(table_name) -%}
 
-{%- set event_table = source('ga4_raw','event_sources') -%}
+{%- set event_table = source('google_analytics_4','event_sources') -%}
 {%- set event_types = dbt_utils.get_column_values(event_table,'event_name') -%}
 
 SELECT 
