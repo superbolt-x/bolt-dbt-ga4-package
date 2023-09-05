@@ -3,7 +3,7 @@
         unique_key='unique_key'
 ) }}
 
-{%- set schema_name, table_name = 'ga4_raw', 'locations' -%}
+{%- set schema_name, table_name = 'google_analytics_4', 'locations' -%}
 
 {%- set exclude_fields = [
    "_fivetran_id",
