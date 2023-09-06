@@ -14,30 +14,6 @@ sources:
       - name: pages 
 
 models:
-  - name: _stg_ga4_traffic_sources 
-    columns:
-      - name: unique_key
-        tests: 
-          - unique
-          - not_null
-  - name: _stg_ga4_traffic_sources_granular 
-    columns:
-      - name: unique_key
-        tests: 
-          - unique
-          - not_null
-  - name: _stg_ga4_ecomm_salesperformance 
-    columns:
-      - name: unique_key
-        tests: 
-          - unique
-          - not_null
-  - name: _stg_ga4_ecomm_salesperformance_granular 
-    columns:
-      - name: unique_key
-        tests: 
-          - unique
-          - not_null
   - name: ga4_traffic_sources 
     columns:
       - name: unique_key
