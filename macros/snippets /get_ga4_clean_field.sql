@@ -27,7 +27,7 @@
         {%- else -%}
         {{column_name}}
 
-        {%- endif -%}/*
+        {%- endif -%}*/
     
     {%- endif -%}
 
