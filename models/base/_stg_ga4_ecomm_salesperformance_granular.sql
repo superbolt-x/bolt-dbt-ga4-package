@@ -47,5 +47,5 @@ WITH raw_table AS
     )
 
 SELECT *,
-    date||'_'||profile||'_'||source_medium||'_'||campaign_id||'_'||transaction_id as unique_key
+    date||'_'||profile||'_'||source_medium||'_'||campaign_name||'_'||campaign_id||'_'||ad||'_'||term||'_'||landing_page||'_'||transaction_id as unique_key
 FROM staging
