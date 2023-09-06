@@ -20,7 +20,7 @@ WITH
         profile,
         source_medium,
         {%- for field in fields %}
-        COALESCE(SUM(field),0) as field,
+        COALESCE(SUM(field),0) as field
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
         
