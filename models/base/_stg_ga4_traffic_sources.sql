@@ -14,7 +14,7 @@
                     |map(attribute="name")
                     |reject("in",exclude_fields)
                     -%}  
-{%- set primary_keys = ['date','profile','source_medium','campaign','campaign_id'] -%} -- is ga keyword necessary ?
+{%- set primary_keys = ['date','profile','source_medium','campaign','campaign_id'] -%} 
 
 WITH raw_table AS 
     (SELECT 
