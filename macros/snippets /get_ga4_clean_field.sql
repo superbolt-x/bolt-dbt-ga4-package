@@ -11,15 +11,17 @@
         {%- endif -%}
     
     {%- else -%}
-        {%- if column_name == 'first_user_source_medium' -%}
+        {%- if column_name == 'property' -%}
+        SPLIT_PART({{column_name}},'/',1) as profile,
+        {%- elif column_name == 'first_user_source_medium' -%}
         {{column_name}} as source_medium,
-        {%- if column_name == 'first_user_campaign_name' -%}
+        {%- elif column_name == 'first_user_campaign_name' -%}
         {{column_name}} as campaign_name,
-        {%- if column_name == 'first_user_campaign_id' -%}
+        {%- elif column_name == 'first_user_campaign_id' -%}
         {{column_name}} as campaign_id,
-        {%- if column_name == 'first_user_manual_ad_content' -%}
+        {%- elif column_name == 'first_user_manual_ad_content' -%}
         {{column_name}} as ad,
-        {%- if column_name == 'first_user_manual_term' -%}
+        {%- elif column_name == 'first_user_manual_term' -%}
         {{column_name}} as term,
         {%- else -%}
         {{column_name}}
