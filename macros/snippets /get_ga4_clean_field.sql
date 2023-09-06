@@ -1,5 +1,9 @@
 {%- macro get_ga4_clean_field(table_name, column_name) %}
 
+
+    {{column_name}}
+    
+    /*
     {%- if table_name == 'pages' -%}
         {%- if column_name == 'page_path' -%}
         {{column_name}},
@@ -26,7 +30,7 @@
         {%- else -%}
         {{column_name}}
 
-        {%- endif -%}
+        {%- endif -%}*/
     
     {%- endif -%}
 
