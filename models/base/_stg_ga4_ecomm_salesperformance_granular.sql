@@ -3,7 +3,7 @@
         unique_key='unique_key'
 ) }}
 
-{%- set schema_name, table_name = 'google_analytics_4', 'granular_ecomm_salesperformance' -%}   --import raw table
+{%- set schema_name, table_name = 'ga4_raw', 'granular_ecomm_salesperformance' -%}   --import raw table
 
 {%- set exclude_fields = [
    "_fivetran_id"
