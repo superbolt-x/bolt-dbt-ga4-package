@@ -9,7 +9,7 @@
         {{column_name}}
         
         {%- endif -%}
-    /*
+    
     {%- else -%}
         {%- if column_name == 'property' -%}
         SPLIT_PART({{column_name}},'/',1) as profile,
@@ -27,7 +27,7 @@
         {{column_name}}
 
         {%- endif -%}
-    */
+    
     {%- endif -%}
 
 
