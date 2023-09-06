@@ -48,13 +48,3 @@ SELECT *,
     date||'_'||profile||'_'||source_medium||'_'||campaign||'_'||google_ads_keyword||'_'||manual_ad_content||'_'||landing_page as unique_key
 FROM staging
 LEFT JOIN event_table USING(date,campaign_name)
-/*
-{%- set goal_table_exists = check_source_exists(schema_name, 'traffic_sources_goals') %}
-{%- if goal_table_exists %}
-LEFT JOIN goals USING({{ primary_keys|join(',') }})
-{%- endif %}
-{%- set goal_bis_table_exists = check_source_exists(schema_name, 'traffic_sources_goals_bis') %}
-{%- if goal_bis_table_exists %}
-LEFT JOIN goals_bis USING({{ primary_keys|join(',') }})
-{%- endif %}
-*/
