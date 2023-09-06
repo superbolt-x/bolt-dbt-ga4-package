@@ -37,15 +37,12 @@ WITH raw_table AS
             first_user_campaign_name as campaign_name, 
             first_user_campaign_id as campaign_id, 
             transaction_id,
-            --MAX(sessions_to_transaction) as sessions_to_transaction,
-            --MAX(days_to_transaction) as days_to_transaction,
-            AVG(items_purchased) as item_quantity,
-            AVG(item_revenue) as transaction_revenue
+            ecommerce_purchase as transactions,
+            total_revenue as transaction_revenue
     
     FROM raw_table
-    GROUP BY date, profile, source_medium, campaign_id, transaction_id
     )
 
 SELECT *,
-    date||'_'||profile||'_'||source_medium||'_'||campaign_id||'_'||transaction_id as unique_key
+    date||'_'||profile||'_'||source_medium||'_'||campaign_name||'_'||campaign_id||'_'||transaction_id as unique_key
 FROM staging
