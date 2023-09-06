@@ -9,9 +9,9 @@ SELECT
     first_user_campaign_name as campaign_name,
     first_user_campaign_id as campaign_id,
     {%- if 'granular' in table_name %}
-    first_user_manual_ad_content as ad,
-    first_user_manual_term as term,
-    landing_page,
+        first_user_manual_ad_content as ad,
+        first_user_manual_term as term,
+        landing_page,
     {%- else %}
     {% endif -%}
     {% for event_type in event_types -%}
