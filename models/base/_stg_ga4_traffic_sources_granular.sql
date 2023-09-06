@@ -14,7 +14,7 @@
                     |map(attribute="name")
                     |reject("in",exclude_fields)
                     -%}  
-{%- set primary_keys = ['date','profile','source_medium','campaign','google_ads_keyword','manual_ad_content','landing_page'] -%} -- is ga keyword necessary ?
+{%- set primary_keys = ['date','profile','source_medium','campaign','campaign_id','ad','term','landing_page'] -%}
 
 WITH raw_table AS 
     (SELECT 
@@ -32,19 +32,18 @@ WITH raw_table AS
     ),
 
     event_table AS (
-            {{ get_facebook_ads_insights__child_source('event') }}
+            {{ get_ga4_events_insights__child_source('granular_events') }}
     ),
 
     staging AS 
     (SELECT *,
         sessions * average_session_duration as session_duration,
-        sessions - engaged_sessions as bounced_sessions--,
-        --sessions * percent_new_sessions/100 as new_sessions
+        sessions - engaged_sessions as bounced_sessions
     FROM raw_table
     )
 
 SELECT *,
     MAX(_fivetran_synced) over () as last_updated,
-    date||'_'||profile||'_'||source_medium||'_'||campaign||'_'||google_ads_keyword||'_'||manual_ad_content||'_'||landing_page as unique_key
+    date||'_'||profile||'_'||source_medium||'_'||campaign||'_'||campaign_id||'_'||ad||'_'||term||'_'||landing_page as unique_key
 FROM staging
-LEFT JOIN event_table USING(date,campaign_name)
+LEFT JOIN event_table USING(date,source_medium,campaign_name,campaign_id,ad,term,landing_page)
