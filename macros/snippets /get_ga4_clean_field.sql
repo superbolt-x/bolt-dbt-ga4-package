@@ -25,9 +25,9 @@
         {%- elif column_name == 'first_user_manual_term' -%}
         {{column_name}} as term,
         {%- else -%}
-        {{column_name}}*/
+        {{column_name}}
 
-        {%- endif -%}
+        {%- endif -%}/*
     
     {%- endif -%}
 
