@@ -3,7 +3,7 @@
         unique_key='unique_key'
 ) }}
 
-{%- set schema_name, table_name = 'google_analytics_4', 'granular_traffic_sources' -%}
+{%- set schema_name, table_name = 'ga4_raw', 'granular_traffic_sources' -%}
 
 {%- set exclude_fields = [
    "_fivetran_id"
@@ -42,33 +42,6 @@ WITH raw_table AS
         --sessions * percent_new_sessions/100 as new_sessions
     FROM raw_table
     )
-/*
-    {%- set goal_table_exists = check_source_exists(schema_name, 'traffic_sources_goals') -%}
-    {%- if goal_table_exists %}
-
-    , goals AS 
-    (SELECT {{ primary_keys|join(', ') }},
-        {% for n in range(1,11) -%}
-        goal_{{n}}_completions
-        {%- if not loop.last %},{% endif %}
-        {% endfor %}
-    FROM {{ source(schema_name, 'traffic_sources_goals') }}
-    )
-    {%- endif %}
-
-    {%- set goal_bis_table_exists = check_source_exists(schema_name, 'traffic_sources_goals_bis') %}
-    {%- if goal_bis_table_exists %}
-    , goals_bis AS 
-    (SELECT 
-        {{ primary_keys|join(', ') }},
-        {% for n in range(11,21) -%}
-        goal_{{n}}_completions
-        {%- if not loop.last %},{% endif %}
-        {% endfor %}
-    FROM {{ source(schema_name, 'traffic_sources_goals_bis') }}
-    )
-    {%- endif %}
-*/
 
 SELECT *,
     MAX(_fivetran_synced) over () as last_updated,
