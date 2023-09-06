@@ -1,7 +1,14 @@
 {{ config (
     alias = target.database + '_ga4_performance_by_sourcemedium'
 )}}
+
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
+{%- set dimensions_list = ['date','profile','source_medium'] -%}
+{%- set fields = adapter.get_columns_in_relation(ref('ga4_traffic_sources'))
+                    |map(attribute="name")
+                    |reject("in",dimensions_list)
+                    |list
+                    -%}  
 
 WITH 
     {% for date_granularity in date_granularity_list -%}
@@ -12,13 +19,10 @@ WITH
         {{date_granularity}} as date,
         profile,
         source_medium,
-        COALESCE(SUM(sessions),0) as sessions,
-        --COALESCE(SUM(new_sessions),0) as new_sessions,
-        COALESCE(SUM(bounced_sessions),0) as bounced_sessions,
-        COALESCE(SUM(session_duration),0) as session_duration,
-        COALESCE(SUM(screen_page_views),0) as pageviews,
-        COALESCE(SUM(transactions),0) as purchases,
-        COALESCE(SUM(transaction_revenue),0) as revenue
+        {%- for field in fields %}
+        COALESCE(SUM(field),0) as field,
+        {%- if not loop.last %},{%- endif %}
+        {%- endfor %}
         
     FROM {{ ref('ga4_traffic_sources') }}
     GROUP BY 1,2,3,4)
