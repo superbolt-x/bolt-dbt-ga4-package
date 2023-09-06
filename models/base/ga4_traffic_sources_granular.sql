@@ -35,7 +35,7 @@ WITH
         {%- endif -%}
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
-    FROM {{ ref('_stg_googleanalytics_traffic_sources') }}
+    FROM {{ ref('_stg_ga4_traffic_sources_granular') }}
     {%- if var('currency') != 'USD' %}
     LEFT JOIN currency USING(date)
     {%- endif %}
