@@ -1,5 +1,5 @@
 {%- set currency_fields = [
-    "total_revenue"
+    "transaction_revenue"
 ]
 -%}
 
