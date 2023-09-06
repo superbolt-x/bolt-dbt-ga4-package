@@ -9,8 +9,8 @@ WITH
     performance_{{date_granularity}} AS 
     (SELECT 
         '{{date_granularity}}' as date_granularity,
-        {{date_granularity}} as date, -- to keep ? 
-        profile, --to keep? 
+        {{date_granularity}} as date,
+        profile,
         source_medium,
         campaign_name,
         COALESCE(SUM(sessions),0) as sessions,
