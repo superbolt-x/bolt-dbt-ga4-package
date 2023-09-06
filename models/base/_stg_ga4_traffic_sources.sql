@@ -43,7 +43,7 @@ WITH raw_table AS
     )
 
 SELECT *,
-    MAX(_fivetran_synced) over () as last_updated,
-    --date||'_'||profile||'_'||source_medium||'_'||campaign||'_'||campaign_id as unique_key
+    MAX(_fivetran_synced) over () as last_updated
+    --,date||'_'||profile||'_'||source_medium||'_'||campaign||'_'||campaign_id as unique_key
 FROM staging
 --LEFT JOIN event_table USING(date,source_medium,campaign_name,campaign_id)
