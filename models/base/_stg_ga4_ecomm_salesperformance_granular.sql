@@ -33,21 +33,17 @@ WITH raw_table AS
     staging AS 
     (SELECT date, 
             profile, 
-            first_user_source_medium as source_medium, 
-            first_user_campaign_name as campaign_name,
-            first_user_campaign_id as campaign_id,
-            content_id,
-            content_type as content,
-            first_user_google_ads_keyword as keyword,
-            landing_page as page_path,
+            source_medium, 
+            campaign_name,
+            campaign_id,
+            ad,
+            term,
+            landing_page,
             transaction_id,
-            --MAX(sessions_to_transaction) as sessions_to_transaction,
-            --MAX(days_to_transaction) as days_to_transaction,
-            AVG(items_purchased) as item_quantity,
-            AVG(item_revenue) as transaction_revenue
+            ecommerce_purchase as transactions,
+            total_revenue as transaction_revenue
     
     FROM raw_table
-    GROUP BY date, profile, source_medium, campaign_id, transaction_id, content, content_type, content_id, keyword, page_path
     )
 
 SELECT *,
