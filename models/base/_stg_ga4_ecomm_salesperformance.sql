@@ -33,9 +33,9 @@ WITH raw_table AS
     staging AS 
     (SELECT date, 
             profile, 
-            first_user_source_medium as source_medium, 
-            first_user_campaign_name as campaign_name, 
-            first_user_campaign_id as campaign_id, 
+            source_medium, 
+            campaign_name,
+            campaign_id, 
             transaction_id,
             ecommerce_purchase as transactions,
             total_revenue as transaction_revenue
