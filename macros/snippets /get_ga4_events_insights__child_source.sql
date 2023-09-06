@@ -12,6 +12,7 @@ SELECT
     first_user_manual_ad_content as ad,
     first_user_manual_term as term,
     landing_page,
+    {%- else %}
     {% endif -%}
     {% for event_type in event_types -%}
         COALESCE(SUM(CASE WHEN event_type = '{{event_type}}' THEN event_count ELSE 0 END), 0) as {{event_type}},
@@ -20,6 +21,11 @@ SELECT
     {%- endfor -%}
 
 FROM event_table
-GROUP BY 1,2
+    
+{%- if 'granular' in table_name %}
+GROUP BY 1,2,3,4,5,6,7
+{%- else %}
+GROUP BY 1,2,3,4
+{% endif -%}
 
 {%- endmacro %}
