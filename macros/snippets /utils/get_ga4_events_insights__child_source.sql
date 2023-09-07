@@ -14,7 +14,8 @@ SELECT
         landing_page,
     {% endif -%}
     {% for event_type in event_types -%}
-        COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as "{{event_type}}"
+        COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as REGEXP_REPLACE(LOWER('{{event_type}}'), '[ -]+', '_'),
+        COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_value ELSE 0 END), 0) as REGEXP_REPLACE(LOWER('{{event_type}}'||'_value'), '[ -]+', '_')
     {%- if not loop.last %},{% endif -%}
     {%- endfor -%}
 
