@@ -15,7 +15,7 @@ SELECT
         landing_page,
     {% endif -%}
     {% for event_type in event_types -%}
-        COALESCE(SUM(CASE WHEN event_type = '{{event_type}}' THEN event_count ELSE 0 END), 0) as {{event_type}}
+        COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as "{{event_type}}"
     {%- if not loop.last %},{% endif -%}
     {%- endfor -%}
 
