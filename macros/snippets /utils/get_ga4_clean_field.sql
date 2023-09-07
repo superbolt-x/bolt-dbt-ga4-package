@@ -11,7 +11,7 @@
     
     {%- else -%}
         {%- if column_name == 'property' -%}
-            SPLIT_PART({{column_name}},'/',1) as profile
+            SPLIT_PART({{column_name}},'/',2) as profile
         {%- elif column_name == 'first_user_source_medium' -%}
             {{column_name}} as source_medium
         {%- elif column_name == 'first_user_campaign_name' -%}
