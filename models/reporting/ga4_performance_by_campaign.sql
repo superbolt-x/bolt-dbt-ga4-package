@@ -3,7 +3,7 @@
 )}}
 
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
-{%- set dimensions_list = ['date','profile','source_medium','campaign_name','campaign_id'] -%}
+{%- set dimensions_list = ['date','profile','source_medium','campaign_name','campaign_id','day','week','month','quarter','year'] -%}
 {%- set fields = adapter.get_columns_in_relation(ref('ga4_traffic_sources'))
                     |map(attribute="name")
                     |reject("in",dimensions_list)
