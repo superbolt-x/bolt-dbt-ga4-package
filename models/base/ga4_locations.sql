@@ -19,7 +19,7 @@
 WITH raw_table AS 
     (SELECT 
         {%- for field in fields %}
-        {{ get_googleanalytics_clean_field(table_name, field) }}
+        {{ get_ga4_clean_field(table_name, field) }}
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
     FROM {{ source(schema_name, table_name) }}
