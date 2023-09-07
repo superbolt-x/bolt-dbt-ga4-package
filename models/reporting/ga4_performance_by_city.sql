@@ -3,7 +3,7 @@
 )}}
     
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
-{%- set reject_list = ['date','profile','country','day','week','month','quarter','year','region','city'] -%}
+{%- set reject_list = ['date','profile','country','day','week','month','quarter','year','region','city','_fivetran_synced','unique_key','last_updated'] -%}
 {%- set fields = adapter.get_columns_in_relation(ref('ga4_locations'))
                     |map(attribute="name")
                     |reject("in",reject_list)
