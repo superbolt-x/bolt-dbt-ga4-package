@@ -1,7 +1,6 @@
 {%- macro get_ga4_events_insights__child_source(table_name) -%}
 
-{%- set event_table = source('ga4_raw',table_name) -%}
-{%- set event_types = dbt_utils.get_column_values(event_table,'event_name') -%}
+{%- set event_types = dbt_utils.get_column_values(source('ga4_raw',table_name),'event_name') -%}
 
 SELECT 
     date,
@@ -19,7 +18,7 @@ SELECT
     {%- if not loop.last %},{% endif -%}
     {%- endfor -%}
 
-FROM event_table
+FROM {{ source('ga4_raw',table_name) }}
     
 {%- if 'granular' in table_name %}
 GROUP BY 1,2,3,4,5,6,7,8
