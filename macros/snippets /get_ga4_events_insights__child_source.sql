@@ -12,7 +12,6 @@ SELECT
         first_user_manual_ad_content as ad,
         first_user_manual_term as term,
         landing_page,
-    {%- else %}
     {% endif -%}
     {% for event_type in event_types -%}
         COALESCE(SUM(CASE WHEN event_type = '{{event_type}}' THEN event_count ELSE 0 END), 0) as {{event_type}},
