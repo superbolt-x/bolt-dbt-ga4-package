@@ -5,7 +5,7 @@
 
 SELECT 
     date,
-    SPLIT_PART(property,'/',1) as profile,
+    SPLIT_PART(property,'/',2) as profile,
     first_user_source_medium as source_medium,
     first_user_campaign_name as campaign_name,
     first_user_campaign_id as campaign_id,
