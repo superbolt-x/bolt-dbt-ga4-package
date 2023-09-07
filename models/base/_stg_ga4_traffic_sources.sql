@@ -15,7 +15,7 @@
                     |reject("in",exclude_fields)
                     |list
                     -%}  
-{%- set primary_keys = ['date','profile','source_medium','campaign','campaign_id'] -%} 
+{%- set primary_keys = ['date','profile','source_medium','campaign_name','campaign_id'] -%} 
 
 WITH raw_table AS 
     (SELECT 
