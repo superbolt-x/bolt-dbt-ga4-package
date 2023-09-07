@@ -13,6 +13,7 @@
 {%- set fields = adapter.get_columns_in_relation(source(schema_name, table_name))
                     |map(attribute="name")
                     |reject("in",exclude_fields)
+                    |list
                     -%}  
 
 WITH raw_table AS 
