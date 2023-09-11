@@ -12,6 +12,7 @@ sources:
       - name: events
       - name: location
       - name: pages 
+      - name: location_events
 
 models:
   - name: ga4_traffic_sources 
