@@ -1,46 +1,42 @@
-{%- set currency_fields = [
-    "total_revenue"
-]
--%}
-
-{%- set exclude_fields = [
-    "_fivetran_synced"
-]
--%}
-
-{%- set stg_fields = adapter.get_columns_in_relation(ref('_stg_ga4_location_events'))
+{{ config (
+    alias = target.database + '_ga4_performance_by_city_events'
+)}}
+{%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
+{%- set reject_list = ['date','profile','source_medium','campaign_name',
+    'campaign_id','day','week','month','quarter','year','last_updated','unique_key'] -%}
+{%- set fields = adapter.get_columns_in_relation(ref('ga4_traffic_sources_granular'))
                     |map(attribute="name")
-                    |reject("in",exclude_fields)
+                    |reject("in",reject_list)
+                    |list
                     -%}  
 
 WITH 
-    {% if var('currency') != 'USD' -%}
-    currency AS
-    (SELECT DISTINCT date, "{{ var('currency') }}" as raw_rate, 
-        LAG(raw_rate) ignore nulls over (order by date) as exchange_rate
-    FROM utilities.dates 
-    LEFT JOIN utilities.currency USING(date)
-    WHERE date <= current_date),
-    {%- endif -%}
+    {% for date_granularity in date_granularity_list -%}
 
-    {%- set exchange_rate = 1 if var('currency') == 'USD' else 'exchange_rate' %}
-    
-    insights AS 
+    performance_{{date_granularity}} AS 
     (SELECT 
-        {%- for field in stg_fields -%}
-        {%- if field in currency_fields %}
-        "{{ field }}"::float/{{ exchange_rate }} as "{{ field }}"
-        {%- else %}
-        "{{ field }}"
-        {%- endif -%}
+        '{{date_granularity}}' as date_granularity,
+        {{date_granularity}} as date,
+        profile,
+        source_medium,
+        campaign_name,
+        campaign_id,
+        {%- for field in fields %}
+        COALESCE(SUM("{{ field }}"),0) as "{{ field }}"
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
-    FROM {{ ref('_stg_ga4_traffic_sources_location_events') }}
-    {%- if var('currency') != 'USD' %}
-    LEFT JOIN currency USING(date)
-    {%- endif %}
-    )
+        
+    FROM {{ ref('ga4_location_events') }}
+    GROUP BY 1,2,3,4,5,6)
 
-SELECT *,
-    {{ get_date_parts('date') }}
-FROM insights 
+    {%- if not loop.last %},
+
+    {% endif %}
+    {%- endfor %}
+
+{% for date_granularity in date_granularity_list -%}
+SELECT * 
+FROM performance_{{date_granularity}}
+{% if not loop.last %}UNION ALL
+{% endif %}
+{%- endfor %}
