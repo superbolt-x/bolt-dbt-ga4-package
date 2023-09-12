@@ -16,32 +16,23 @@
                     |list
                     -%}  
 
-WITH raw_table AS 
-    (SELECT 
-        {%- for field in fields %}
-        {{ get_ga4_clean_field(table_name, field) }}
-        {%- if not loop.last %},{%- endif %}
-        {%- endfor %}
-    FROM {{ source(schema_name, table_name) }}
+WITH staging AS 
+    (SELECT date, 
+            SPLIT_PART(property,'/',2) as profile, 
+            first_user_source_medium as source_medium, 
+            first_user_campaign_name as campaign_name,
+            first_user_campaign_id as campaign_id, 
+            transaction_id,
+            ecommerce_purchases as transactions,
+            total_revenue as transaction_revenue
+    
+     FROM {{ source(schema_name, table_name) }}
     {% if is_incremental() -%}
 
     -- this filter will only be applied on an incremental run
     where date >= (select max(date) from {{ this }})
 
     {% endif %}
-    ),
-
-    staging AS 
-    (SELECT date, 
-            profile, 
-            source_medium, 
-            campaign_name,
-            campaign_id, 
-            transaction_id,
-            ecommerce_purchases as transactions,
-            total_revenue as transaction_revenue
-    
-    FROM raw_table
     )
 
 SELECT *,
