@@ -1,45 +1,46 @@
-{{ config( 
-        materialized='incremental',
-        unique_key='unique_key'
-) }}
-
-{%- set schema_name, table_name = 'ga4_raw', 'location' -%}
-
-{%- set exclude_fields = [
-   "_fivetran_id",
-   "continent"
+{%- set currency_fields = [
+    "purchase_value"
 ]
 -%}
 
-{%- set fields = adapter.get_columns_in_relation(source(schema_name, table_name))
+{%- set exclude_fields = [
+    "_fivetran_synced"
+]
+-%}
+
+{%- set stg_fields = adapter.get_columns_in_relation(ref('_stg_ga4_locations'))
                     |map(attribute="name")
                     |reject("in",exclude_fields)
                     -%}  
 
-WITH raw_table AS 
+WITH 
+    {% if var('currency') != 'USD' -%}
+    currency AS
+    (SELECT DISTINCT date, "{{ var('currency') }}" as raw_rate, 
+        LAG(raw_rate) ignore nulls over (order by date) as exchange_rate
+    FROM utilities.dates 
+    LEFT JOIN utilities.currency USING(date)
+    WHERE date <= current_date),
+    {%- endif -%}
+
+    {%- set exchange_rate = 1 if var('currency') == 'USD' else 'exchange_rate' %}
+    
+    insights AS 
     (SELECT 
-        {%- for field in fields %}
-        {{ get_ga4_clean_field(table_name, field) }}
+        {%- for field in stg_fields -%}
+        {%- if field in currency_fields %}
+        "{{ field }}"::float/{{ exchange_rate }} as "{{ field }}"
+        {%- else %}
+        "{{ field }}"
+        {%- endif -%}
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
-    FROM {{ source(schema_name, table_name) }}
-    ),
-
-    staging AS 
-    (SELECT *,
-        sessions * average_session_duration as session_duration,
-        sessions - engaged_sessions as bounced_sessions
-    FROM raw_table
+    FROM {{ ref('_stg_ga4_locations') }}
+    {%- if var('currency') != 'USD' %}
+    LEFT JOIN currency USING(date)
+    {%- endif %}
     )
 
 SELECT *,
-    {{ get_date_parts('date') }},
-    MAX(_fivetran_synced) over () as last_updated,
-    date||'_'||profile||'_'||country||'_'||region||'_'||city as unique_key
-FROM staging
-{% if is_incremental() -%}
-
-  -- this filter will only be applied on an incremental run
-where date >= (select max(date) from {{ this }})
-
-{% endif %}
+    {{ get_date_parts('date') }}
+FROM insights 
