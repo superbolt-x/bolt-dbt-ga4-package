@@ -3,7 +3,7 @@
         unique_key='unique_key'
 ) }}
 
-{%- set schema_name, table_name = 'ga4_raw', 'ecomm_salesperformance' -%}   --import raw table
+{%- set schema_name, table_name = 'ga4_raw', 'ecomm_salesperformance' -%}   
 
 {%- set exclude_fields = [
    "_fivetran_id"
@@ -26,13 +26,7 @@ WITH staging AS
             ecommerce_purchases as transactions,
             total_revenue as transaction_revenue
     
-     FROM {{ source(schema_name, table_name) }}
-    {% if is_incremental() -%}
-
-    -- this filter will only be applied on an incremental run
-    where date >= (select max(date) from {{ this }})
-
-    {% endif %}
+     FROM ga4_raw.ecomm_salesperformance
     )
 
 SELECT *,
