@@ -3,7 +3,7 @@
         unique_key='unique_key'
 ) }}
 
-{%- set schema_name, table_name = 'ga4_raw', 'location_events' -%}
+{%- set schema_name, table_name = 'ga4_raw', 'location' -%}
 
 {%- set exclude_fields = [
    "_fivetran_id"
@@ -14,7 +14,7 @@
                     |map(attribute="name")
                     |reject("in",exclude_fields)
                     -%}  
-{%- set primary_keys = ['date','profile','continent','country','region','city','event_name'] -%} -- is ga keyword necessary ?
+{%- set primary_keys = ['date','profile','continent','country','region','city'] -%} -- is ga keyword necessary ?
 
 WITH raw_table AS 
     (SELECT 
