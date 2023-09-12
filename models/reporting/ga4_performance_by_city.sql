@@ -3,7 +3,7 @@
 )}}
     
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
-{%- set reject_list = ['date','profile','country','day','week','month','quarter','year','region','city','_fivetran_synced','unique_key','last_updated'] -%}
+{%- set reject_list = ['date','profile','country','continent','day','week','month','quarter','year','region','city','_fivetran_synced','unique_key','last_updated'] -%}
 {%- set fields = adapter.get_columns_in_relation(ref('ga4_locations'))
                     |map(attribute="name")
                     |reject("in",reject_list)
@@ -18,6 +18,7 @@ WITH
         '{{date_granularity}}' as date_granularity,
         {{date_granularity}} as date,
         profile,
+        continent,
         country,
         region,
         city,
@@ -27,7 +28,7 @@ WITH
         {%- endfor %}
         
     FROM {{ ref('ga4_locations') }}
-    GROUP BY 1,2,3,4,5,6)
+    GROUP BY 1,2,3,4,5,6,7)
 
     {%- if not loop.last %},
 
