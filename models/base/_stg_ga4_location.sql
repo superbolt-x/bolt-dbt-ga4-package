@@ -14,7 +14,7 @@
                     |map(attribute="name")
                     |reject("in",exclude_fields)
                     -%}  
-{%- set primary_keys = ['date','profile','source_medium','campaign',] -%} -- is ga keyword necessary ?
+{%- set primary_keys = ['date','profile','continent','country','region','city','event_name'] -%} -- is ga keyword necessary ?
 
 WITH raw_table AS 
     (SELECT 
@@ -32,7 +32,7 @@ WITH raw_table AS
     ),
 
     event_table AS (
-            {{ get_facebook_ads_insights__child_source('event') }}
+            {{ get_ga4_events_insights__child_source('location_events') }}
     ),
 
     staging AS 
@@ -45,6 +45,6 @@ WITH raw_table AS
 
 SELECT *,
     MAX(_fivetran_synced) over () as last_updated,
-    date||'_'||profile||'_'||source_medium||'_'||campaign||'_'||google_ads_keyword||'_'||manual_ad_content||'_'||landing_page as unique_key
+    date||'_'||profile||'_'||continent||'_'||country||'_'||region||'_'||city|| as unique_key
 FROM staging
-LEFT JOIN event_table USING(date,campaign_name)
+LEFT JOIN event_table USING(date,profile,continent,country,region,city)
