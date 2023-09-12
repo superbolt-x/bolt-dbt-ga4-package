@@ -38,7 +38,7 @@ WITH raw_table AS
             campaign_name,
             campaign_id, 
             transaction_id,
-            ecommerce_purchase as transactions,
+            ecommerce_purchases as transactions,
             total_revenue as transaction_revenue
     
     FROM raw_table
