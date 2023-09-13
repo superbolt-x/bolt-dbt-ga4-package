@@ -8,10 +8,14 @@ SELECT
     SPLIT_PART(property,'/',2) as profile,
     
     {%- if 'location' not in table_name %}
-        
         first_user_source_medium as source_medium,
         first_user_campaign_name as campaign_name,
         first_user_campaign_id as campaign_id,
+    {%- else -%}
+        city,
+        region,
+        country,
+        continent,
     {% endif -%}
     
     {%- if 'granular' in table_name %}
@@ -34,6 +38,11 @@ GROUP BY
     ,source_medium,
     campaign_name,
     campaign_id
+{%- else -%}
+    ,city,
+    region,
+    country,
+    continent,
 {% endif -%}
 {%- if 'granular' in table_name %}
     ,ad,
