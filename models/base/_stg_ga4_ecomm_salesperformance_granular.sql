@@ -23,7 +23,6 @@ WITH staging AS
             first_user_campaign_name as campaign_name,
             first_user_campaign_id as campaign_id,
             first_user_manual_ad_content as ad,
-            first_user_manual_term as term,
             landing_page,
             transaction_id,
             ecommerce_purchases as transactions,
@@ -41,5 +40,5 @@ WITH staging AS
     )
 
 SELECT *,
-    date||'_'||profile||'_'||source_medium||'_'||campaign_name||'_'||campaign_id||'_'||ad||'_'||term||'_'||landing_page||'_'||transaction_id as unique_key
+    date||'_'||profile||'_'||source_medium||'_'||campaign_name||'_'||campaign_id||'_'||ad||'_'||landing_page||'_'||transaction_id as unique_key
 FROM staging
