@@ -5,9 +5,10 @@
 
 SELECT 
     date,
+    SPLIT_PART(property,'/',2) as profile,
     
     {%- if 'location' not in table_name %}
-        SPLIT_PART(property,'/',2) as profile,
+        
         first_user_source_medium as source_medium,
         first_user_campaign_name as campaign_name,
         first_user_campaign_id as campaign_id,
@@ -27,10 +28,10 @@ SELECT
 FROM {{ source('ga4_raw',table_name) }}
 
 GROUP BY 
-    date
+    date,
+    profile
 {%- if 'location' not in table_name %}
-    ,profile,
-    source_medium,
+    ,source_medium,
     campaign_name,
     campaign_id
 {% endif -%}
