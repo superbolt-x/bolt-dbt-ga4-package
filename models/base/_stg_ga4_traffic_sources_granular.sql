@@ -15,7 +15,7 @@
                     |reject("in",exclude_fields)
                     |list
                     -%}  
-{%- set primary_keys = ['date','profile','source_medium','campaign_name','campaign_id','ad','term','landing_page'] -%}
+{%- set primary_keys = ['date','profile','source_medium','campaign_name','campaign_id','ad','landing_page'] -%}
 
 WITH raw_table AS 
     (SELECT 
@@ -45,6 +45,6 @@ WITH raw_table AS
 
 SELECT *,
     MAX(_fivetran_synced) over () as last_updated,
-    date||'_'||profile||'_'||source_medium||'_'||campaign_name||'_'||campaign_id||'_'||ad||'_'||term||'_'||landing_page as unique_key
+    date||'_'||profile||'_'||source_medium||'_'||campaign_name||'_'||campaign_id||'_'||ad||'_'||landing_page as unique_key
 FROM staging
 LEFT JOIN event_table USING(date,profile,source_medium,campaign_name,campaign_id,ad,term,landing_page)
