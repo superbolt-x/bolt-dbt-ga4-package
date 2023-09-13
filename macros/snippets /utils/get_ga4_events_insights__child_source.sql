@@ -2,12 +2,15 @@
 
 {%- set event_types = dbt_utils.get_column_values(source('ga4_raw',table_name),'event_name') -%}
 
+
 SELECT 
     date,
-    SPLIT_PART(property,'/',2) as profile,
-    first_user_source_medium as source_medium,
-    first_user_campaign_name as campaign_name,
-    first_user_campaign_id as campaign_id,
+    {%- if 'location' not in table_name %}
+        SPLIT_PART(property,'/',2) as profile,
+        first_user_source_medium as source_medium,
+        first_user_campaign_name as campaign_name,
+        first_user_campaign_id as campaign_id,
+    {% endif -%}
     {%- if 'granular' in table_name %}
         first_user_manual_ad_content as ad,
         landing_page,
