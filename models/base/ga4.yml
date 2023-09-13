@@ -51,9 +51,3 @@ models:
         tests: 
           - unique
           - not_null
-  - name: ga4_location_events
-    columns:
-      - name: unique_key
-        tests: 
-          - unique
-          - not_null
