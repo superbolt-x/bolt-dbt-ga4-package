@@ -26,7 +26,15 @@ WITH staging AS
             ecommerce_purchases as transactions,
             total_revenue as transaction_revenue
     
-     FROM ga4_raw.ecomm_salesperformance
+     FROM {{ source(schema_name, table_name) }}
+        
+     {% if is_incremental() -%}
+
+     -- this filter will only be applied on an incremental run
+     where date >= (select max(date) from {{ this }})
+
+    {% endif %}
+        
     )
 
 SELECT *,
