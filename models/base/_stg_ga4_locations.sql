@@ -23,12 +23,8 @@ WITH raw_table AS
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
     FROM {{ source(schema_name, table_name) }}
-    {% if is_incremental() -%}
+    
 
-    -- this filter will only be applied on an incremental run
-    where date >= (select max(date) from {{ this }})
-
-    {% endif -%}
     ),
 
     event_table AS (
