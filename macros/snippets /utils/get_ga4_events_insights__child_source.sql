@@ -10,7 +10,6 @@ SELECT
     first_user_campaign_id as campaign_id,
     {%- if 'granular' in table_name %}
         first_user_manual_ad_content as ad,
-        first_user_manual_term as term,
         landing_page,
     {% endif -%}
     {% for event_type in event_types -%}
@@ -22,7 +21,7 @@ SELECT
 FROM {{ source('ga4_raw',table_name) }}
     
 {%- if 'granular' in table_name %}
-GROUP BY 1,2,3,4,5,6,7,8
+GROUP BY 1,2,3,4,5,6,7
 {%- else %}
 GROUP BY 1,2,3,4,5
 {% endif -%}
