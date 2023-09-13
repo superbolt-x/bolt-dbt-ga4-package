@@ -28,7 +28,7 @@ WITH raw_table AS
     -- this filter will only be applied on an incremental run
     where date >= (select max(date) from {{ this }})
 
-    {% endif %}
+    {% endif -%}
     ),
 
     event_table AS (
@@ -44,7 +44,7 @@ WITH raw_table AS
     )
 
 SELECT *,
-    --MAX(_fivetran_synced) over () as last_updated,
+    MAX(_fivetran_synced) over () as last_updated,
     date||'_'||profile||'_'||continent||'_'||country||'_'||region||'_'||city|| as unique_key
 FROM staging
 LEFT JOIN event_table USING(date,profile,continent,country,region,city)
