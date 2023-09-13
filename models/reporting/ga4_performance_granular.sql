@@ -1,5 +1,5 @@
 {{ config (
-    alias = target.database + '_ga4_granular_performance_by_campaign'
+    alias = target.database + '_ga4_performance_granular'
 )}}
 
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
@@ -22,13 +22,16 @@ WITH
         source_medium,
         campaign_name,
         campaign_id,
+        ad,
+        term,
+        landing_page,
         {%- for field in fields %}
         COALESCE(SUM("{{ field }}"),0) as "{{ field }}"
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
         
-    FROM {{ ref('ga4_traffic_sources') }}
-    GROUP BY 1,2,3,4,5,6)
+    FROM {{ ref('ga4_traffic_sources_granular') }}
+    GROUP BY 1,2,3,4,5,6,7,8,9)
 
     {%- if not loop.last %},
 
