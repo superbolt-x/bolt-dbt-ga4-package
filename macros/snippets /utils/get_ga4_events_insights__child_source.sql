@@ -33,16 +33,16 @@ FROM {{ source('ga4_raw',table_name) }}
 
 GROUP BY 
     date,
-    profile
+    profile,
 {%- if 'location' not in table_name %}
-    ,source_medium,
+    source_medium,
     campaign_name,
     campaign_id
 {%- else -%}
-    ,city,
+    city,
     region,
     country,
-    continent,
+    continent
 {% endif -%}
 {%- if 'granular' in table_name %}
     ,ad,
