@@ -46,6 +46,6 @@ WITH raw_table AS
 
 SELECT *,
     MAX(_fivetran_synced) over () as last_updated,
-    date||'_'||profile||'_'||continent||'_'||country||'_'||region||'_'||city|| as unique_key
+    date||'_'||profile||'_'||continent||'_'||country||'_'||region||'_'||city as unique_key
 FROM staging
 LEFT JOIN event_table USING(date,profile,continent,country,region,city)
