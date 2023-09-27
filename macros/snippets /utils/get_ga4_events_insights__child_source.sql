@@ -1,8 +1,8 @@
 {%- macro get_ga4_events_insights__child_source(table_name) -%}
 
 {%- set event_types = dbt_utils.get_column_values(source('ga4_raw',table_name),'event_name') -%}
-{%- set event_types_renamed = dbt_utils.get_column_values(ref('_stg_ga4_events'),'event_name',order_by='event_name asc') -%}
-{%- set event_types_number = dbt_utils.get_column_values(ref('_stg_ga4_events'),'dup_event_name_nb',order_by='event_name asc') -%}
+{%- set event_types_renamed = dbt_utils.get_column_values(table=ref('_stg_ga4_events'),column='event_name',order_by='event_name asc') -%}
+{%- set event_types_number = dbt_utils.get_column_values(table=ref('_stg_ga4_events'),column='dup_event_name_nb',order_by='event_name asc') -%}
 
 
 SELECT 
