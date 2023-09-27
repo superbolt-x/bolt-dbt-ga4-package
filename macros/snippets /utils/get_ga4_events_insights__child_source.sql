@@ -24,8 +24,8 @@ SELECT
     {% endif -%}
     
     {% for event_type in event_types -%}
-        COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as "{{event_type}}",
-        COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_value ELSE 0 END), 0) as "{{event_type}}_value"
+        COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as {{ adapter.quote(event_type) }},
+        COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_value ELSE 0 END), 0) as {{ adapter.quote(event_type~'_value') }}
         {%- if not loop.last %},{% endif -%}
     {%- endfor -%}
 
