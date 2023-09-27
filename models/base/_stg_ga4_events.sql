@@ -8,6 +8,7 @@
    WITH distinct_events AS (
     SELECT DISTINCT(event_name) AS event_name
     FROM {{ source('ga4_raw','events') }}
+    ORDER BY 1 ASC
      ),
    
    dup_events AS (
@@ -25,4 +26,5 @@
    FROM distinct_events 
    LEFT JOIN dup_events 
    ON LOWER(distinct_events.event_name) = dup_events.lower_event_name 
+
 
