@@ -25,6 +25,7 @@
     ROW_NUMBER() OVER () as rank
    FROM distinct_events 
    LEFT JOIN dup_events 
-   ON LOWER(distinct_events.event_name) = dup_events.lower_event_name 
+   ON LOWER(distinct_events.event_name) = dup_events.lower_event_name
+   ORDER BY event_name ASC
 
 
