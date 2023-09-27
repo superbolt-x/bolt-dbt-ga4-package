@@ -1,9 +1,12 @@
 {%- macro get_ga4_events_insights__child_source(table_name) -%}
 
 {%- set event_types = dbt_utils.get_column_values(source('ga4_raw',table_name),'event_name') -%}
-{%- set event_types_renamed = dbt_utils.get_column_values(table=ref('_stg_ga4_events'),column='event_name',order_by='event_name asc') -%}
-{%- set event_types_number = dbt_utils.get_column_values(table=ref('_stg_ga4_events'),column='dup_event_name_nb',order_by='event_name asc') -%}
+{%- set rank = dbt_utils.get_column_values(ref('_stg_ga4_events'),'rank') -%}
+{%- set dup_events = dbt_utils.get_column_values(ref('_stg_ga4_events'),'event_name',where='dup_event_nb > 1') -%}
 
+WITH duplicates_data AS (
+    SELECT event_name, dup_event_nb FROM ref('_stg_ga4_events') WHERE dup_event_name_nb > 1
+)
 
 SELECT 
     date,
@@ -25,8 +28,8 @@ SELECT
         landing_page,
     {% endif -%}
     
-    {%- for (event_type,event_type_nb) in zip(event_types_renamed,event_types_number) -%}
-        {%- if event_type_nb > 1 %}
+    {%- for event_type, event_type_nb in zip(event_types,rank) -%}
+        {%- if event_type in dup_events %}
         COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as {{ adapter.quote(event_type~'_'~event_type_nb) }},
         COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_value ELSE 0 END), 0) as {{ adapter.quote(event_type~'_'~event_type_nb~'_value') }}
         {%- else -%}
