@@ -4,10 +4,6 @@
 {%- set rank = dbt_utils.get_column_values(ref('_stg_ga4_events'),'rank') -%}
 {%- set dup_events = dbt_utils.get_column_values(ref('_stg_ga4_events'),'event_name',where='dup_event_name_nb > 1') -%}
 
-WITH duplicates_data AS (
-    SELECT event_name, dup_event_name_nb FROM ref('_stg_ga4_events') WHERE dup_event_name_nb > 1
-)
-
 SELECT 
     date,
     SPLIT_PART(property,'/',2) as profile,
