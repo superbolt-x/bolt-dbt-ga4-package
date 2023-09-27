@@ -14,10 +14,8 @@
    
    SELECT 
     event_name, 
-    case 
-     when lower(event_name) in (SELECT lower_event_name FROM dup_events) then event_name||'_'||floor(random()*100)
-     else event_name
-   	end as event_name_renamed
+    coalesce(lower_event_name,event_name) as dup_event_name,
+		ROW_NUMBER() OVER (PARTITION BY dup_event_name) as dup_event_name_nb
    FROM distinct_events 
    LEFT JOIN dup_events 
    ON LOWER(distinct_events.event_name) = dup_events.lower_event_name 
