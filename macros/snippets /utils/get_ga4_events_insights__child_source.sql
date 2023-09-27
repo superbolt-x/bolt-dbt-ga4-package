@@ -2,10 +2,10 @@
 
 {%- set event_types = dbt_utils.get_column_values(source('ga4_raw',table_name),'event_name') -%}
 {%- set rank = dbt_utils.get_column_values(ref('_stg_ga4_events'),'rank') -%}
-{%- set dup_events = dbt_utils.get_column_values(ref('_stg_ga4_events'),'event_name',where='dup_event_nb > 1') -%}
+{%- set dup_events = dbt_utils.get_column_values(ref('_stg_ga4_events'),'event_name',where='dup_event_name_nb > 1') -%}
 
 WITH duplicates_data AS (
-    SELECT event_name, dup_event_nb FROM ref('_stg_ga4_events') WHERE dup_event_name_nb > 1
+    SELECT event_name, dup_event_name_nb FROM ref('_stg_ga4_events') WHERE dup_event_name_nb > 1
 )
 
 SELECT 
