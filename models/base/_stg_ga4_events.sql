@@ -20,7 +20,8 @@
    SELECT 
     event_name, 
     coalesce(lower_event_name,event_name) as dup_event_name,
-    ROW_NUMBER() OVER (PARTITION BY dup_event_name) as dup_event_name_nb
+    ROW_NUMBER() OVER (PARTITION BY dup_event_name) as dup_event_name_nb,
+    ROW_NUMBER() OVER () as rank
    FROM distinct_events 
    LEFT JOIN dup_events 
    ON LOWER(distinct_events.event_name) = dup_events.lower_event_name 
