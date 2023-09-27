@@ -1,3 +1,8 @@
+{{ config( 
+        materialized='incremental',
+        unique_key='event_name'
+) }}
+
 {%- set event_types = dbt_utils.get_column_values(source('ga4_raw','events'),'event_name') -%}
     
    WITH distinct_events AS (
