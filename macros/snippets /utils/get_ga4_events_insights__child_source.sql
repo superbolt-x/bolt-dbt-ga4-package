@@ -2,7 +2,7 @@
 
 {%- set event_types = dbt_utils.get_column_values(ref('_stg_ga4_events'),'event_name',order_by='event_name') -%}
 {%- set rank = dbt_utils.get_column_values(ref('_stg_ga4_events'),'rank',order_by='rank') -%}
-{%- set dup_events = dbt_utils.get_column_values(ref('_stg_ga4_events'),'event_name',where='dup_event_name_nb > 1') -%}
+{%- set dup_events = dbt_utils.get_column_values(ref('_stg_ga4_events'),'event_name',where='dup_event_name_nb > 1',default=[]) -%}
 
 SELECT 
     date,
