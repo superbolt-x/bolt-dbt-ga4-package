@@ -25,7 +25,7 @@ SELECT
         landing_page,
     {% endif -%}
     
-    {% for (event_type,event_type_nb) in zip(event_types_renamed,event_types_number) -%}
+    {%- for (event_type,event_type_nb) in zip(event_types_renamed,event_types_number) -%}
         {%- if event_type in event_types %}
             {%- if event_type_nb > 1 %}
             COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as {{ adapter.quote(event_type~'_'~event_type_nb) }},
