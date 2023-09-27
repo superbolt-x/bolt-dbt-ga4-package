@@ -3,7 +3,7 @@
         unique_key='unique_key'
 ) }}
 
-{%- set schema_name, table_name = 'ga4_raw', 'granular_traffic_sources' -%}
+{%- set schema_name, table_name = 'ga4_raw', 'traffic_sources_granular' -%}
 
 {%- set exclude_fields = [
    "_fivetran_id"
