@@ -20,6 +20,12 @@
             {{column_name}} as campaign_id
         {%- elif column_name == 'first_user_manual_ad_content' -%}
             {{column_name}} as ad
+        {%- elif column_name == 'session_source_medium' -%}
+            {{column_name}} as source_medium
+        {%- elif column_name == 'session_campaign_name' -%}
+            {{column_name}} as campaign_name
+        {%- elif column_name == 'session_campaign_id' -%}
+            {{column_name}} as campaign_id
         {%- else -%}
             {{column_name}}
         {%- endif -%}
