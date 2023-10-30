@@ -1,8 +1,14 @@
 {%- macro get_ga4_events_insights__child_source(table_name) -%}
-
-{%- set event_types = dbt_utils.get_column_values(ref('_stg_ga4_events'),'event_name',order_by='event_name') -%}
-{%- set rank = dbt_utils.get_column_values(ref('_stg_ga4_events'),'rank',order_by='rank') -%}
-{%- set dup_events = dbt_utils.get_column_values(ref('_stg_ga4_events'),'event_name',where='dup_event_name_nb > 1',default=[]) -%}
+    
+{%- if 'session' in table_name %}
+    {%- set event_types = dbt_utils.get_column_values(ref('_stg_ga4_events_session'),'event_name',order_by='event_name') -%}
+    {%- set rank = dbt_utils.get_column_values(ref('_stg_ga4_events_session'),'rank',order_by='rank') -%}
+    {%- set dup_events = dbt_utils.get_column_values(ref('_stg_ga4_events_session'),'event_name',where='dup_event_name_nb > 1',default=[]) -%}
+{%- else -%}
+    {%- set event_types = dbt_utils.get_column_values(ref('_stg_ga4_events'),'event_name',order_by='event_name') -%}
+    {%- set rank = dbt_utils.get_column_values(ref('_stg_ga4_events'),'rank',order_by='rank') -%}
+    {%- set dup_events = dbt_utils.get_column_values(ref('_stg_ga4_events'),'event_name',where='dup_event_name_nb > 1',default=[]) -%}
+{% endif -%}
 
 SELECT 
     date,
