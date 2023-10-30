@@ -10,7 +10,9 @@
         {%- endif -%}
 
     {%- elif 'session' in table_name -%}
-        {%- if column_name == 'session_source_medium' -%}
+        {%- if column_name == 'property' -%}
+            SPLIT_PART({{column_name}},'/',2) as profile
+        {%- elif column_name == 'session_source_medium' -%}
             {{column_name}} as source_medium
         {%- elif column_name == 'session_campaign_name' -%}
             {{column_name}} as campaign_name
