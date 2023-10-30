@@ -9,7 +9,7 @@
             {{column_name}}
         {%- endif -%}
 
-    {%- elif table_name ~* 'session' -%}
+    {%- elif table_name == 'traffic_sources_session' -%}
         {%- if column_name == 'session_source_medium' -%}
             {{column_name}} as source_medium
         {%- elif column_name == 'session_campaign_name' -%}
