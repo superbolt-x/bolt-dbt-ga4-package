@@ -8,10 +8,16 @@ SELECT
     date,
     SPLIT_PART(property,'/',2) as profile,
     
-    {%- if 'location' not in table_name %}
+    {%- if 'location' not in table_name and 'session' not in table_name %}
         first_user_source_medium as source_medium,
         first_user_campaign_name as campaign_name,
         first_user_campaign_id as campaign_id,
+
+    {%- elif 'session' in table_name %}
+        session_source_medium as source_medium,
+        session_campaign_name as campaign_name,
+        session_campaign_id as campaign_id,
+    
     {%- else -%}
         city,
         region,
