@@ -31,7 +31,7 @@ WITH staging AS
      {% if is_incremental() -%}
 
      -- this filter will only be applied on an incremental run
-     where date >= (select max(date)-2 from {{ this }})
+     where date >= (select max(date)-3 from {{ this }})
 
     {% endif %}
         
