@@ -37,10 +37,10 @@ SELECT
     {% endif -%}
     
     {%- for event_type, event_type_nb in zip(event_types,rank) -%}
-        {%- if event_type in dup_events %}
+        {%- if event_type in dup_events and event_type not ilike '%"%' %}
         COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as {{ adapter.quote(event_type~'_'~event_type_nb) }},
         COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_value ELSE 0 END), 0) as {{ adapter.quote(event_type~'_'~event_type_nb~'_value') }}
-        {%- else -%}
+        {%- elif event_type not ilike '%"%' -%}
         COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as {{ adapter.quote(event_type) }},
         COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_value ELSE 0 END), 0) as {{ adapter.quote(event_type~'_value') }}
         {% endif -%}
