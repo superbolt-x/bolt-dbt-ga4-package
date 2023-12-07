@@ -25,7 +25,7 @@ models:
         tests: 
           - unique
           - not_null
-  - name: _stg_ga4_events_session_dimension
+  - name: _stg_ga4_events_session
     columns:
       - name: event_name
         tests: 
@@ -43,13 +43,13 @@ models:
         tests: 
           - unique
           - not_null
-  - name: ga4_traffic_sources_session_dimension 
+  - name: ga4_traffic_sources_session
     columns:
       - name: unique_key
         tests: 
           - unique
           - not_null
-  - name: ga4_traffic_sources_granular_session_dimension 
+  - name: ga4_traffic_sources_granular_session
     columns:
       - name: unique_key
         tests: 
