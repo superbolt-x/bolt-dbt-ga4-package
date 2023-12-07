@@ -1,5 +1,5 @@
 {{ config (
-    alias = target.database + '_ga4_performance_by_campaign_session'
+    alias = target.database + '_ga4_performance_by_campaign_session_dimension'
 )}}
 
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
