@@ -43,13 +43,13 @@ models:
         tests: 
           - unique
           - not_null
-  - name: ga4_traffic_sources_session 
+  - name: ga4_traffic_sources_session_dimension 
     columns:
       - name: unique_key
         tests: 
           - unique
           - not_null
-  - name: ga4_traffic_sources_granular_session 
+  - name: ga4_traffic_sources_granular_session_dimension 
     columns:
       - name: unique_key
         tests: 
