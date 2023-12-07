@@ -25,7 +25,7 @@ models:
         tests: 
           - unique
           - not_null
-  - name: _stg_ga4_events_session
+  - name: _stg_ga4_events_session_dimension
     columns:
       - name: event_name
         tests: 
