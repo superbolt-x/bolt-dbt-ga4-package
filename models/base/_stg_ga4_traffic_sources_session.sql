@@ -3,7 +3,7 @@
         unique_key='unique_key'
 ) }}
 
-{%- set schema_name, table_name = 'ga4_raw', 'traffic_sources' -%}
+{%- set schema_name, table_name = 'ga4_raw', 'traffic_sources_session' -%}
 
 {%- set exclude_fields = [
    "_fivetran_id"
@@ -33,7 +33,7 @@ WITH raw_table AS
     ),
 
     event_table AS (
-            {{ get_ga4_events_insights__child_source('events') }}
+            {{ get_ga4_events_insights__child_source('events_session') }}
     ),
 
     staging AS 
