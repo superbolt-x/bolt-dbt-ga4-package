@@ -1,5 +1,5 @@
 {%- set currency_fields = [
-    "purchase_value"
+    "purchase_revenue"
 ]
 -%}
 
