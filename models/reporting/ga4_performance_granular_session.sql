@@ -25,7 +25,11 @@ WITH
         ad,
         landing_page,
         {%- for field in fields %}
-        COALESCE(SUM("{{ field }}"),0) as "{{ field }}"
+            {%- if field == 'purchase_revenue' -%}
+            COALESCE(SUM("{{ field }}"),0) as "purchase_value"
+            {%- else -%}
+            COALESCE(SUM("{{ field }}"),0) as "{{ field }}"
+            {%- endif -%}
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
         
