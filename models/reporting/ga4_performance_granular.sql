@@ -27,7 +27,7 @@ WITH
         {%- for field in fields %}
             {%- if field == 'purchase_revenue' -%}
             COALESCE(SUM("{{ field }}"),0) as "purchase_value"
-            {%- elif field == 'ecommerce_purchases' -%}
+            {%- elif field == 'conversion_purchase' -%}
             COALESCE(SUM("{{ field }}"),0) as "purchase"
             {%- else -%}
             COALESCE(SUM("{{ field }}"),0) as "{{ field }}"
