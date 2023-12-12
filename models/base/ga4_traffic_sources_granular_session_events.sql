@@ -1,5 +1,5 @@
 WITH event_table AS 
-    ({{ get_ga4_events_insights__child_source('granular_events') }})
+    ({{ get_ga4_events_insights__child_source('granular_events_session') }})
   
 SELECT *,
     {{ get_date_parts('date') }},
