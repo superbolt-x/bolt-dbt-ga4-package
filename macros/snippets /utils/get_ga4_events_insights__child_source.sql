@@ -39,11 +39,9 @@ SELECT
     {%- for event_type, event_type_nb in zip(event_types,rank) -%}
         {%- if '"' not in event_type and '\u0027' not in event_type %}
             {%- if event_type in dup_events %}
-            COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as {{ adapter.quote(event_type~'_'~event_type_nb) }},
-            COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_value ELSE 0 END), 0) as {{ adapter.quote(event_type~'_'~event_type_nb~'_value') }}
+            COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as {{ adapter.quote(event_type~'_'~event_type_nb) }}
             {%- else -%}
-            COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as {{ adapter.quote(event_type) }},
-            COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_value ELSE 0 END), 0) as {{ adapter.quote(event_type~'_value') }}
+            COALESCE(SUM(CASE WHEN event_name = '{{event_type}}' THEN event_count ELSE 0 END), 0) as {{ adapter.quote(event_type) }}
             {% endif -%}
             {%- if not loop.last %},{% endif -%}
         {% endif -%}
