@@ -31,7 +31,25 @@ models:
         tests: 
           - unique
           - not_null
+  - name: _stg_ga4_events_granular
+    columns:
+      - name: event_name
+        tests: 
+          - unique
+          - not_null
+  - name: _stg_ga4_events_granular_session
+    columns:
+      - name: event_name
+        tests: 
+          - unique
+          - not_null
   - name: ga4_traffic_sources 
+    columns:
+      - name: unique_key
+        tests: 
+          - unique
+          - not_null
+  - name: ga4_traffic_sources_events
     columns:
       - name: unique_key
         tests: 
@@ -43,7 +61,7 @@ models:
         tests: 
           - unique
           - not_null
-  - name: ga4_traffic_sources_events
+  - name: ga4_traffic_sources_granular_events
     columns:
       - name: unique_key
         tests: 
@@ -62,6 +80,12 @@ models:
           - unique
           - not_null
   - name: ga4_traffic_sources_granular_session
+    columns:
+      - name: unique_key
+        tests: 
+          - unique
+          - not_null
+  - name: ga4_traffic_sources_granular_session_events
     columns:
       - name: unique_key
         tests: 
