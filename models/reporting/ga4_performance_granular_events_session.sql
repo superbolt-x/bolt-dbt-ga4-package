@@ -1,5 +1,5 @@
 {{ config (
-    alias = target.database + 'ga4_performance_granular_session_events'
+    alias = target.database + '_ga4_performance_granular_events_session'
 )}}
 
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
