@@ -49,6 +49,12 @@ models:
         tests: 
           - unique
           - not_null
+  - name: ga4_traffic_sources_session_events
+    columns:
+      - name: unique_key
+        tests: 
+          - unique
+          - not_null
   - name: ga4_traffic_sources_granular_session
     columns:
       - name: unique_key
