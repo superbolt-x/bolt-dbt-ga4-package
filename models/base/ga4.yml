@@ -31,13 +31,13 @@ models:
         tests: 
           - unique
           - not_null
-  - name: _stg_ga4_events_granular
+  - name: _stg_ga4_granular_events
     columns:
       - name: event_name
         tests: 
           - unique
           - not_null
-  - name: _stg_ga4_events_granular_session
+  - name: _stg_ga4_granular_session_events
     columns:
       - name: event_name
         tests: 
