@@ -27,7 +27,7 @@ WITH raw_table AS
     {% if is_incremental() -%}
 
     -- this filter will only be applied on an incremental run
-    where date >= (select max(date)-3 from {{ this }})
+    where date >= (select max(date)-7 from {{ this }})
 
     {% endif %}
     ),
