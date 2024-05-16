@@ -20,6 +20,8 @@
             {{column_name}} as campaign_id
         {%- elif column_name == 'session_manual_ad_content' -%}
             {{column_name}} as ad
+        {%- elif column_name == 'session_manual_term' -%}
+            {{column_name}} as adset
         {%- else -%}
             {{column_name}}
         {%- endif -%}
