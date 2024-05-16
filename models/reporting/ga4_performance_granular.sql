@@ -4,7 +4,7 @@
 
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
 {%- set reject_list = ['date','profile','source_medium','campaign_name',
-    'campaign_id','ad','landing_page','day','week','month','quarter','year','last_updated','unique_key'] -%}
+    'campaign_id','adset','ad','landing_page','day','week','month','quarter','year','last_updated','unique_key'] -%}
 {%- set fields = adapter.get_columns_in_relation(ref('ga4_traffic_sources_granular'))
                     |map(attribute="name")
                     |reject("in",reject_list)
@@ -22,6 +22,7 @@ WITH
         source_medium,
         campaign_name,
         campaign_id,
+        adset,
         ad,
         landing_page,
         {%- for field in fields %}
@@ -36,7 +37,7 @@ WITH
         {%- endfor %}
         
     FROM {{ ref('ga4_traffic_sources_granular') }}
-    GROUP BY 1,2,3,4,5,6,7,8)
+    GROUP BY 1,2,3,4,5,6,7,8,9)
 
     {%- if not loop.last %},
 
