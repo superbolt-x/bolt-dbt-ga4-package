@@ -1,8 +1,3 @@
-{{ config( 
-        materialized='incremental',
-        unique_key='unique_key'
-) }}
-
 {%- set schema_name, table_name = 'ga4_raw', 'traffic_sources_granular' -%}
 
 {%- set exclude_fields = [
@@ -24,12 +19,6 @@ WITH raw_table AS
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
     FROM {{ source(schema_name, table_name) }}
-    {% if is_incremental() -%}
-
-    -- this filter will only be applied on an incremental run
-    where date >= (select max(date)-7 from {{ this }})
-
-    {% endif %}
     ),
 
     staging AS 
