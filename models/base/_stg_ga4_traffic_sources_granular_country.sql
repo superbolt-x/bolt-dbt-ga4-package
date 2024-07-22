@@ -23,7 +23,6 @@ WITH raw_table AS
 
     staging AS 
     (SELECT *,
-        sessions * average_session_duration as session_duration,
         sessions - engaged_sessions as bounced_sessions
     FROM raw_table
     )
