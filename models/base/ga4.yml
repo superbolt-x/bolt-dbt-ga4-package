@@ -5,6 +5,7 @@ sources:
     schema: ga4_raw
     tables:
       - name: traffic_sources_granular
+      - name: traffic_sources_granular_country
       - name: traffic_sources_granular_session
       - name: traffic_sources
       - name: traffic_sources_session
