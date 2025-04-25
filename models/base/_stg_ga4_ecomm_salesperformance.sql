@@ -38,5 +38,5 @@ WITH staging AS
     )
 
 SELECT *,
-    date||'_'||profile||'_'||source_medium||'_'||campaign_name||'_'||campaign_id||'_'||transaction_id as unique_key
+    profile||'_'||transaction_id as unique_key
 FROM staging
