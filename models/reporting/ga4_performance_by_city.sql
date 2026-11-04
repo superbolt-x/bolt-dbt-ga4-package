@@ -23,7 +23,7 @@ WITH
         region,
         city,
         {%- for field in fields %}
-        COALESCE(SUM("{{ field }}"),0) as "{{ field }}" 
+        {{ get_ga4_aggregated_field(field, fields) }}
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
         

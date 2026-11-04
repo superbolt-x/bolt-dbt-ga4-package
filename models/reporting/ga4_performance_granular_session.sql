@@ -31,7 +31,7 @@ WITH
             {%- elif field == 'conversions_purchase' -%}
             COALESCE(SUM("{{ field }}"),0) as "purchase"
             {%- else -%}
-            COALESCE(SUM("{{ field }}"),0) as "{{ field }}"
+            {{ get_ga4_aggregated_field(field, fields) }}
             {%- endif -%}
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
